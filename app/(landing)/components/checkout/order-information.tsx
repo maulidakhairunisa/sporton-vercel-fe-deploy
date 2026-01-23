@@ -1,24 +1,49 @@
-import CardWithHeader from "../ui/card-with-header";
+"use client";
 
-const OrderInformation = () => {
+import { useState } from "react";
+import CardWithHeader from "../ui/card-with-header";
+import { CustomerInfo } from "@/app/hooks/use-cart-store";
+
+type TOrderInformation ={
+    formData: CustomerInfo;
+    setFormData: React.Dispatch<React.SetStateAction<CustomerInfo>>
+}
+
+const OrderInformation = ({formData, setFormData}: TOrderInformation) => {
+    const handleInputChange = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    ) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value })
+    }
     return (
         <CardWithHeader title="Order Information">
             <div className="p-5">
                 <div className="input-group">
-                    <label htmlFor="full_name">Full Name</label>
-                    <input type="text" placeholder="Type your full name" id="full_name" />
+                    <label htmlFor="customerName">Full Name</label>
+                    <input type="text" placeholder="Type Your Full Name"
+                        id="customerName"
+                        name="customerName"
+                        value={formData.customerName}
+                        onChange={handleInputChange} />
                 </div>
                 <div className="input-group">
-                    <label htmlFor="wa_number">Whatsapp Number</label>
+                    <label htmlFor="customerContact">Whatsapp Number</label>
                     <input
                         type="text"
-                        placeholder="+62xxxx"
-                        id="wa_number"
-                    />
+                        placeholder="Type Your Contact Number"
+                        id="customerContact"
+                        name="customerContact"
+                        value={formData.customerContact ?? ""}
+                        onChange={handleInputChange} />
                 </div>
                 <div className="input-group">
-                    <label htmlFor="shipping_address">Shipping Address</label>
-                    <textarea rows={7} id="shipping_address" placeholder="Example Street, 18, West Jakarta, Indonesia, 66521"></textarea>
+                    <label htmlFor="customerAddress">Shipping Address</label>
+                    <textarea rows={7}
+                        placeholder="Type Your Shipping Address"
+                        id="customerAddress"
+                        name="customerAddress"
+                        value={formData.customerAddress}
+                        onChange={handleInputChange} />
                 </div>
             </div>
         </CardWithHeader>
