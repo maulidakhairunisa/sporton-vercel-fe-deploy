@@ -2,12 +2,14 @@
 import { link } from "fs";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { FiBox, FiCreditCard, FiLayers, FiShoppingCart, FiLogOut } from "react-icons/fi"
-
+import { logout } from "@/app/services/auth.service";
 
 const Sidebar = () => {
-    const pathname = usePathname()
+    const pathname = usePathname();
+    const {push} = useRouter();
+
     const menuItems = [
         {
             name: "Products",
@@ -30,6 +32,11 @@ const Sidebar = () => {
             link: "/admin/bank-info",
         },
     ];
+    const handleLogout = () => {
+        logout();
+        push("/admin/login");
+    }
+
     return (
         <aside className="w-80 min-h-screen bg-white border-r border-gray-100 flex flex-col fixed left-0 top-0">
             <div className="py-8 px-14 border-b border-gray-200">
@@ -56,9 +63,16 @@ const Sidebar = () => {
                 }
 
             </div>
-            <Link href="#" className="flex gap-3 font-medium py-3 px-4.5 mx-5 hover:bg-gray-100 duration-300 rounded-lg mt-auto mb-10">
+            <button 
+            className="flex gap-3 
+            font-medium 
+            py-3 px-4.5 mx-5 
+            hover:bg-gray-100 
+            duration-300 rounded-lg 
+            mt-auto mb-10" 
+            onClick={handleLogout}>
             <FiLogOut size={24}/>Log Out
-            </Link>
+            </button>
         </aside>
     );
 };

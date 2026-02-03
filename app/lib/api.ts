@@ -5,12 +5,12 @@ export async function fetchAPI <T>(
     const res = await fetch (`${process.env.NEXT_PUBLIC_API_URL}${endpoint}`,{
         ...options,
         cache: options?.cache || "no-store", //no store agar data realtime
-    })
+    });
     if(!res.ok) {
         let errorMessage = 'Failed to fetch data from ${endpoint}';
         try{
             const errorData = await res.json();
-            errorMessage = errorData || errorData.error || errorMessage;
+            errorMessage = errorData.message || errorData.error || errorMessage;
         } catch (e){
             console.log(e)
         }
@@ -22,4 +22,11 @@ export async function fetchAPI <T>(
 export function getImageUrl(path:string){
     if(path.startsWith("http")) return path;
     return `${process.env.NEXT_PUBLIC_API_ROOT}/${path}`;
+}
+
+export function getAuthHeaders(){
+    const token = localStorage.getItem("token");
+    return{
+        Authorization: `Bearer ${token}`,
+    };
 }
