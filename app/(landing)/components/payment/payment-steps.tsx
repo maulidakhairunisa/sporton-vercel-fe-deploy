@@ -54,11 +54,11 @@ const PaymentSteps = () => {
       alert("Transaction created successfully!");
       reset();
       push(`/order-status/${res._id}`);
-      
     } catch (error) {
       console.log(error);
     }
   };
+
 
   return (
     <CardWithHeader title="Payment Steps">
