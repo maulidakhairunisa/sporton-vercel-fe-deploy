@@ -17,8 +17,13 @@ const Checkout = () => {
         customerAddress: ""
     });
     const handlePayment = () =>{
-        if (!formData.customerName || !formData.customerContact || !formData.customerAddress){
+        if (
+            !formData.customerName || 
+            !formData.customerContact || 
+            !formData.customerAddress
+        ){
             alert("Please Fill In All Fields");
+            return;
         }
         setCustomerInfo(formData);
         push("/payment");

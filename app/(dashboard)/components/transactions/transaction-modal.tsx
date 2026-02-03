@@ -87,19 +87,27 @@ const TransactionModal = ({ isOpen, onClose, transaction, onStatusChange }: TTra
                     <h4 className="font-semibold text-sm mb-2">Items Purchased</h4>
                     <div className="space-y-3">
                         {
-                            transaction.purchasedItems.map((item, index) => (
-                                <div className="border border-gray-200 rounded-lg p-4 flex gap-2">
-                                    <div className="bg-gray-100 rounded-md aspect-square w-8 h-8">
-                                        <Image
-                                            src={getImageUrl(item.productId.imageUrl)}
-                                            width={30}
-                                            height={30}
-                                            alt="product image" />
-                                    </div>
-                                    <div className="font-medium text-sm">{item.productId.name}</div>
-                                    <div className="font-medium ml-auto text-sm">{item.qty}</div>
+                            transaction.purchasedItems.map((data, index) => (
+                                <div key={index} className="border border-gray-200 rounded-lg p-2 flex items-center gap-2">
+                                    {
+                                        data.productId?.imageUrl === undefined ? (
+                                            <div className="text-center text-sm">
+                                                Product had been deleted.
+                                            </div>) : (<>
+                                                <div className="bg-gray-100 rounded aspect-square w-8 h-8">
+                                                    <Image
+                                                        src={getImageUrl(data.productId?.imageUrl)}
+                                                        width={30}
+                                                        height={30}
+                                                        alt="product image" />
+                                                </div>
+                                                <div className="font-medium text-xs">{data.productId?.name}</div>
+                                                <div className="font-medium ml-auto text-xs">{data.qty}</div>
+                                            </>)
+                                    }
                                 </div>
-                            ))}
+                            ))
+                        }
                     </div>
                     <div className="flex justify-between text-sm mt-6">
                         <h4 className="font-semibold">Total</h4>
